@@ -48,6 +48,6 @@ fix:バグ修正
 
 ## ブランチ
 
-main : デプロイ用ブランチ
-develop : 開発用ブランチ
+main : デプロイ用ブランチ  
+develop : 開発用ブランチ  
 feature/task-xx : タスクごとのブランチ、xx にタスク番号を入力
