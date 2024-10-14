@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('api/v1')->group(function () {
-    Route::get('/register', [UserController::class, 'register']);
-    Route::post('/register', [UserController::class, 'register'])->name('register');
+    Route::middleware('guest')->group(function () {
+        Route::post('/register', [UserController::class, 'register'])->name('register');
+        Route::get('/register', [UserController::class, 'register']);
+    });
 });
