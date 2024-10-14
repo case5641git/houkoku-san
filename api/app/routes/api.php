@@ -19,5 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/api/register', [UserController::class, 'register']);
-Route::post('/api/register', [UserController::class, 'register'])->name('register');
+Route::prefix('api/v1')->group(function () {
+    Route::get('/register', [UserController::class, 'register']);
+    Route::post('/register', [UserController::class, 'register'])->name('register');
+});
