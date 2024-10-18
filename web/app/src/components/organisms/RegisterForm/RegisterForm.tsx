@@ -5,6 +5,8 @@ import { ROLE_LIST } from "../../../constants/role";
 import styles from "./styles.module.css";
 import { Label } from "../../atoms/Label/Label";
 
+type Role = (typeof ROLE_LIST)[keyof typeof ROLE_LIST];
+
 type RegisterFormProps = {
   formState: {
     name: string;
@@ -12,7 +14,7 @@ type RegisterFormProps = {
     password: string;
     confirmPassword: string;
     department: string;
-    role: number;
+    role: Role;
   };
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;

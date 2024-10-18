@@ -2,9 +2,15 @@ import { RadioButton } from "../../atoms/RadioButton/RadioButton";
 import { Label } from "../../atoms/Label/Label";
 import styles from "./styles.module.css";
 
+type RadioOption = {
+  id: string;
+  label: string;
+  value: number;
+};
+
 type RadioGroupProps = {
   label: string;
-  options: { id: string; label: string; value: number }[];
+  options: RadioOption[];
   name: string;
   selectedValue: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

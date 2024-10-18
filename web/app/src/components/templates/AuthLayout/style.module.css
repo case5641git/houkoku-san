@@ -6,7 +6,8 @@
 }
 
 .authContainer {
-  width: 300px;
+  width: 90%;
+  max-width: 300px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -17,6 +18,7 @@
   font-weight: bold;
   background-color: RGB(26, 143, 45);
   padding: 5px 0 8px;
+  border-radius: 4px;
 }
 
 .title div {

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./style.module.css";
 
 type AuthLayoutProps = {
@@ -19,9 +20,9 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
         <div className={styles.innerTitle}>報告さん</div>
       </div>
       <div className={styles.authTitle}>{authTitle}</div>
-      <a href={link} className={styles.link}>
+      <Link to={link} className={styles.link}>
         {linkTitle}
-      </a>
+      </Link>
       {children}
     </div>
   </div>
