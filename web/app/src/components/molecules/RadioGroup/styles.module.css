@@ -1,3 +1,7 @@
+.radio_container {
+  margin-top: 10px;
+}
+
 .radio_inner {
   display: flex;
   flex-direction: row;
