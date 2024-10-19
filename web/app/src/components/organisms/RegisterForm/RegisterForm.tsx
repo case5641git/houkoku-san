@@ -13,7 +13,7 @@ export const RegisterForm: React.FC = () => {
 
   /**
    * handleSubmitにフォームの入力値をURLを渡してラップする
-   * @param object  e
+   * @param object e
    * @return JSX.Element
    */
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {

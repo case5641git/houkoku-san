@@ -90,8 +90,8 @@ export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) return;
 
+    validateForm();
     try {
       await axios.post(url, {
         name: formState.name,
@@ -100,7 +100,7 @@ export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
         department: formState.department,
         role: formState.role,
       });
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       setError("登録に失敗しました");
       return;

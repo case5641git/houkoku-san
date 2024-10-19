@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -27,9 +28,9 @@ class UserController extends Controller
         ]);
         try {
             User::create($credentials);
-        } catch (\Exception) {
+        } catch (\Exception $e) {
             return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }        
+        }       
         return response()->json(['message' => 'ユーザー登録が完了しました。'], Response::HTTP_CREATED);
     }
 }

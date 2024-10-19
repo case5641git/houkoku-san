@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('api/v1')->group(function () {
+Route::prefix('v1')->group(function () {
     Route::middleware('guest')->group(function () {
         Route::post('/register', [UserController::class, 'register'])->name('register');
-        Route::get('/register', [UserController::class, 'register']);
     });
 });
