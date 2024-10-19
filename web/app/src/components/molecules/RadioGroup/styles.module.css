@@ -1,0 +1,14 @@
+.radio_container {
+  margin-top: 10px;
+}
+
+.radio_inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.radio_option {
+  margin-right: 20px;
+}
