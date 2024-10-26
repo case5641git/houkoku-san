@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,15 +10,19 @@ use Illuminate\Http\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
-
     /**
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['register']]);
+        $this->middleware('auth:api', ['except' => ['register','login']]);
+    }
+
+    public function test(){
+        Log::info('test test');
+        return null;
     }
 
     /**
@@ -36,16 +40,13 @@ class UserController extends Controller
             'department' => 'required',
         ]);
         try {
-            User::create($credentials);
+            $user = User::create($credentials);
         } catch (\Exception $e) {
+            Log::info($e);
             return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }       
-        return response()->json(['message' => 'ユーザー登録が完了しました。'], Response::HTTP_CREATED);
-    }
-
-    public function test(){
-        Log::info('test test user');
-        return null;
+        $token = auth()->login($user);
+        return $this->respondWithToken($token);
     }
 
     /**
@@ -53,7 +54,6 @@ class UserController extends Controller
      */
     public function login()
     {
-        // Log::info("login");
         $credentials = request(['email', 'password']);
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
