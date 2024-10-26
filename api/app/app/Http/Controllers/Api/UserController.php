@@ -12,25 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-        /**
-     * 新規登録処理
-     * @param Request $request
-     * @return RedirectResponse|JsonResponse
+
+    /**
+     * @return void
      */
-    public function register(Request $request): RedirectResponse|JsonResponse
+    public function __construct()
     {
-        $credentials = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'role' => 'required',
-            'department' => 'required',
-        ]);
-        try {
-            User::create($credentials);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }       
-        return response()->json(['message' => 'ユーザー登録が完了しました。'], Response::HTTP_CREATED);
+        $this->middleware('auth:api', ['except' => ['register']]);
     }
 }
