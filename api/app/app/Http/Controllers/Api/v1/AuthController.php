@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -18,11 +17,6 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['register','login']]);
-    }
-
-    public function test(){
-        Log::info('test test');
-        return null;
     }
 
     /**
@@ -39,10 +33,10 @@ class AuthController extends Controller
             'role' => 'required',
             'department' => 'required',
         ]);
+        $credentials['password'] = bcrypt($credentials['password']);
         try {
             $user = User::create($credentials);
         } catch (\Exception $e) {
-            Log::info($e);
             return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }       
         $token = auth()->login($user);
@@ -54,7 +48,10 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
+        $credentials = request()->validate([
+            'email' => 'required|email', 
+            'password' => 'required'
+        ]);
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
@@ -99,6 +96,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
+            'user' => auth()->user(),
         ]);
     }
 
