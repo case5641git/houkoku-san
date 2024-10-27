@@ -2,16 +2,16 @@ import { RadioGroup } from "../../molecules/RadioGroup/RadioGroup";
 import { InputField } from "../../molecules/InputField/InputField";
 import { Button } from "../../atoms/Button/Button";
 import { ROLE_LIST } from "../../../constants/role";
-import { DEPARTMENT_LIST } from "../../../constants/department";
 import styles from "./styles.module.css";
-import { useRegisterForm } from "../../../contexts/RegisterFormContext";
+import { useLoginForm } from "../../../contexts/LoginFormContext";
 import { useNavigate } from "react-router-dom";
 import { SelectBox } from "../../molecules/SelectBox/SelectBox";
+import { DEPARTMENT_LIST } from "../../../constants/department";
 
-export const RegisterForm: React.FC = () => {
-  const { formState, handleChange, handleSubmit, error } = useRegisterForm();
+export const LoginForm: React.FC = () => {
+  const { formState, handleChange, handleSubmit, error } = useLoginForm();
   const navigate = useNavigate();
-  const url = "http://localhost:8000/api/v1/register";
+  const url = "http://localhost:8000/api/v1/login";
 
   /**
    * handleSubmitにフォームの入力値をURLを渡してラップする
@@ -24,13 +24,6 @@ export const RegisterForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleFormSubmit}>
-      <InputField
-        label="名前"
-        name="name"
-        value={formState.name}
-        onChange={handleChange}
-        type="text"
-      />
       <InputField
         label="メールアドレス"
         name="email"
@@ -45,32 +38,18 @@ export const RegisterForm: React.FC = () => {
         onChange={handleChange}
         type="password"
       />
-      <InputField
-        label="パスワード再入力"
-        name="confirmPassword"
-        value={formState.confirmPassword}
-        onChange={handleChange}
-        type="password"
-      />
       <SelectBox
         name="department"
         label="所属部署"
         list={DEPARTMENT_LIST}
         onChange={handleChange}
       />
-      <RadioGroup
-        label="役職"
-        name="role"
-        selectedValue={formState.role}
-        onChange={handleChange}
-        options={[
-          { id: "role_manager", label: "部長", value: ROLE_LIST.MANAGER },
-          { id: "role_crew", label: "店長", value: ROLE_LIST.CREW },
-        ]}
-      />
+      <div>
+        <a href="/">パスワードをお忘れですか？</a>
+      </div>
       {error && <p>{error}</p>}
       <div className={styles.button_container}>
-        <Button type="submit">登録</Button>
+        <Button type="submit">ログイン</Button>
       </div>
     </form>
   );

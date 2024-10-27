@@ -7,18 +7,15 @@ import axios from "axios";
  * フォームの入力値の型定義
  */
 type FormState = {
-  name: string;
   email: string;
   password: string;
-  confirmPassword: string;
   department: string;
-  role: number;
 };
 
 /**
  * フォームのコンテキストの型定義
  */
-type RegisterFormContextType = {
+type LoginFormContextType = {
   formState: FormState;
   handleChange: (
     e:
@@ -33,7 +30,7 @@ type RegisterFormContextType = {
   ) => Promise<void>;
 };
 
-const RegisterFormContext = createContext<RegisterFormContextType | undefined>(
+const LoginFormContext = createContext<LoginFormContextType | undefined>(
   undefined
 );
 
@@ -42,20 +39,17 @@ const RegisterFormContext = createContext<RegisterFormContextType | undefined>(
  * @param ReactNode children
  * @return JSX.Element
  */
-export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
+export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [formState, setFormState] = useState<FormState>({
-    name: "",
     email: "",
     password: "",
-    confirmPassword: "",
     department: "",
-    role: ROLE_LIST.MANAGER,
   });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const url = "http://localhost:8000/api/v1/register";
+  const url = "http://localhost:8000/api/v1/auth/login";
 
   /**
    * フォームの入力値を更新する
@@ -75,48 +69,31 @@ export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   /**
-   * フォームの入力値を検証する
-   * @param void
-   * @return boolean
-   */
-  const validateForm = () => {
-    if (formState.password !== formState.confirmPassword) {
-      setError("パスワードが一致しません");
-      return false;
-    }
-    return true;
-  };
-
-  /**
    * フォームの入力値を送信する
    * @param object e
    * @return void
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    validateForm();
     try {
       await axios.post(url, {
-        name: formState.name,
         email: formState.email,
         password: formState.password,
         department: formState.department,
-        role: formState.role,
       });
       navigate("/");
     } catch (error) {
-      setError("登録に失敗しました");
+      setError("ログインに失敗しました");
       return;
     }
   };
 
   return (
-    <RegisterFormContext.Provider
+    <LoginFormContext.Provider
       value={{ formState, handleChange, error, handleSubmit }}
     >
       {children}
-    </RegisterFormContext.Provider>
+    </LoginFormContext.Provider>
   );
 };
 
@@ -125,8 +102,8 @@ export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
  * @param void
  * @return RegisterFormContextType
  */
-export const useRegisterForm = () => {
-  const context = useContext(RegisterFormContext);
+export const useLoginForm = () => {
+  const context = useContext(LoginFormContext);
   if (context === undefined) {
     throw new Error(
       "useRegisterForm must be used within a RegisterFormProvider"
