@@ -48,6 +48,7 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
     department: "",
   });
   const [error, setError] = useState<string | null>(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
   const url = "http://localhost:8000/api/v1/auth/login";
 
@@ -61,10 +62,8 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
-      [name]: name === "role" ? parseInt(value) : value,
     }));
   };
 
@@ -75,6 +74,8 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoaded(true);
+    setError(null);
     try {
       await axios.post(url, {
         email: formState.email,
@@ -82,15 +83,21 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
         department: formState.department,
       });
       navigate("/");
-    } catch (error) {
-      setError("ログインに失敗しました");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setError(error.response?.data.message || "ログインに失敗しました。");
+      } else {
+        setError("ログインに失敗しました。");
+      }
       return;
+    } finally {
+      setIsLoaded(false);
     }
   };
 
   return (
     <LoginFormContext.Provider
-      value={{ formState, handleChange, error, handleSubmit }}
+      value={{ formState, handleChange, error, handleSubmit, isLoaded }}
     >
       {children}
     </LoginFormContext.Provider>
@@ -100,14 +107,12 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
 /**
  * フォームのコンテキストを使用する
  * @param void
- * @return RegisterFormContextType
+ * @return LoginFormContextType
  */
 export const useLoginForm = () => {
   const context = useContext(LoginFormContext);
   if (context === undefined) {
-    throw new Error(
-      "useRegisterForm must be used within a RegisterFormProvider"
-    );
+    throw new Error("useLoginForm must be used within a LoginFormProvider");
   }
   return context;
 };
