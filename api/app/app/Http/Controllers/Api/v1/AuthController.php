@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -26,6 +27,7 @@ class AuthController extends Controller
      */
     public function register(Request $request): RedirectResponse|JsonResponse
     {
+        Log::info($request);
         $credentials = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
