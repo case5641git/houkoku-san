@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id()->comment('報告書ID');
-            $table->unsignedBigInteger('user_id')->comment('報告者ID');
+            $table->uuid('user_id')->comment('報告者ID');
             $table->unsignedBigInteger('manager_id')->comment('報告先ID');
             $table->unsignedBigInteger('reserver_num')->comment('予約者数');
             $table->unsignedBigInteger('visitor_num')->comment('飛込来店数');

@@ -28,6 +28,7 @@ type LoginFormContextType = {
     url: string,
     navigate: (path: string) => void
   ) => Promise<void>;
+  isLoaded: boolean;
 };
 
 const LoginFormContext = createContext<LoginFormContextType | undefined>(
