@@ -27,7 +27,6 @@ class AuthController extends Controller
      */
     public function register(Request $request): RedirectResponse|JsonResponse
     {
-        Log::info($request);
         $credentials = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -39,6 +38,7 @@ class AuthController extends Controller
         try {
             $user = User::create($credentials);
         } catch (\Exception $e) {
+            Log::error($e);
             return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }       
         $token = auth()->login($user);

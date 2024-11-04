@@ -8,10 +8,24 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    public $incrementing = false; // 自動増分を無効化
+    protected $keyType = 'string'; // UUIDは文字列として扱う
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->id)) {
+                $model->id = (string) Str::uuid(); // UUIDを生成して設定
+            }
+        });
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -64,5 +78,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    public function isManager()
+    {
+        return $this->role = config('const.common.ROLE.MANAGER');
     }
 }
