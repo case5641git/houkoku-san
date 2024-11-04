@@ -25,13 +25,9 @@ class ReportController extends Controller
     public function index()
     {
         $userId = Auth::id();
-        $user = User::find($userId);
-        $userRole = $user->role;
-        if ($userRole === config('const.common.ROLE.MANAGER')) {
-            $reports = $this->reportService->getCrewsReportsList($userId);
-        } else {
-            $reports = $this->reportService->getOwnReportList($userId);
-        }
+        $reports = User::find($userId)->isManager()
+                    ? $this->reportService->getCrewsReportsList($userId)
+                    : $this->reportService->getOwnReportList($userId);
         return response()->json(['reports' => $reports]);
     }
 }
