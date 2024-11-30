@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Str;
+use App\Models\Report;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -83,5 +84,10 @@ class User extends Authenticatable implements JWTSubject
     public function isManager()
     {
         return $this->role = config('const.common.ROLE.MANAGER');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
     }
 }

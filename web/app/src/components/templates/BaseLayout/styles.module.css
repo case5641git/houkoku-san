@@ -1,0 +1,9 @@
+.base {
+  color: #fff;
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: RGB(217, 217, 217);
+  display: flex;
+}

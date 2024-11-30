@@ -1,4 +1,4 @@
-export const DEPARTMENT_LIST = {
+export const DEPARTMENT_LIST: Record<number, string> = {
   6400: "本部",
   6401: "新宿支店",
   6402: "渋谷支店",
