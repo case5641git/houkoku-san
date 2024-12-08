@@ -5,10 +5,10 @@ import { UserProvider } from "../../contexts/UserContext";
 
 export const Home: React.FC = () => {
   return (
-    <ReportProvider>
-      <UserProvider>
+    <UserProvider>
+      <ReportProvider>
         <HomeTemplate />
-      </UserProvider>
-    </ReportProvider>
+      </ReportProvider>
+    </UserProvider>
   );
 };

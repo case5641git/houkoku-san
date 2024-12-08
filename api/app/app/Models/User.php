@@ -83,7 +83,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function isManager()
     {
-        return $this->role = config('const.common.ROLE.MANAGER');
+        return $this->role === config('const.common.ROLE.MANAGER');
     }
 
     public function reports()

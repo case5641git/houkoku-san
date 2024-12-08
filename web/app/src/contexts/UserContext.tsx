@@ -6,11 +6,14 @@ import {
   ReactNode,
 } from "react";
 import axios from "axios";
+import { useEffect } from "react";
+import { useCookies } from "react-cookie";
 
 type User = {
   id: string;
   department: number;
   name?: string;
+  role?: number;
 };
 
 type Manager = {
@@ -41,24 +44,35 @@ type UserProviderProps = {
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const token = localStorage.getItem("app_access_token");
+  const [cookies] = useCookies(["app_access_token"]);
   const [users, setUsers] = useState<Users>({
     user: { id: "", department: 0 },
     manager: { id: "", name: "" },
     crews: [],
   });
   const [error, setError] = useState<string | null>(null);
+  const token = cookies.app_access_token;
 
   const fetchUsers = useCallback(async () => {
     try {
-      const { data } = await axios.get("/api/v1/auth/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await axios.get(
+        "http://localhost:8000/api/v1/auth/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("data:");
+      console.log(data);
+      setUsers(data);
     } catch {
       setError("ユーザーデータの取得に失敗しました");
     }
+  }, [token]);
+
+  useEffect(() => {
+    fetchUsers();
   }, [token]);
 
   return (

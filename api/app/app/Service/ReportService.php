@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Models\Report;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 
 
 class ReportService
@@ -19,9 +18,14 @@ class ReportService
   {
     $query = Report::where('manager_id', $userId);
     
-    // 検索条件がある場合は追加
-    if ($conditions['start_date'] && $conditions['end_date']) {
+    // 日時検索条件がある場合は追加
+    if (($conditions['start_date'] != "") && ($conditions['end_date'] != "")) {
       $query->whereBetween('created_at', [$conditions['start_date'], $conditions['end_date']]);
+    }
+
+    // ユーザーが指定されたら条件を追加
+    if ($conditions['user_id'] != "") {
+      $query->where('user_id', $conditions['user_id']);
     }
 
     return $query->orderBy('created_at', 'desc')
@@ -39,7 +43,7 @@ class ReportService
   {
     $query = Report::where('user_id', $userId);
     // 検索条件がある場合は追加
-    if ($conditions['start_date'] && $conditions['end_date']) {
+    if (($conditions['start_date'] != "") && ($conditions['end_date'] != "")) {
       $query->whereBetween('created_at', [$conditions['start_date'], $conditions['end_date']]);
     }
 

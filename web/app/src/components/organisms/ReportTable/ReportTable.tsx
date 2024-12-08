@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useReportContext } from "../../../contexts/ReportContext";
 import { DEPARTMENT_LIST } from "../../../constants/department";
 import styles from "./styles.module.css";
+import { Input } from "../../atoms/Input/Input";
+import { Button } from "../../atoms/Button/Button";
 
 type Report = {
   id: string;
@@ -25,19 +27,23 @@ export const ReportTable: React.FC = () => {
         <div className={styles.dateSearchLavel}>日付検索</div>
         <div className={styles.inputDateSearch}>
           <div>
-            <input
+            <Input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              name="startDate"
             />
             <span>〜</span>
-            <input
+            <Input
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
+              name="endDate"
             />
           </div>
-          <button onClick={() => fetchReports(currentPage)}>検索</button>
+          <button onClick={() => fetchReports(currentPage, startDate, endDate)}>
+            検索
+          </button>
         </div>
       </div>
       <div className={styles.listTable}>
