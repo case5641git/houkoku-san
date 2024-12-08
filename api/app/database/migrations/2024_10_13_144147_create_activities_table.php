@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('activities', function (Blueprint $table) {
-            $table->unsignedBigInteger('id', true)->comment('アクティビティID');
-            $table->unsignedBigInteger('message_id')->comment('メッセージID');
+            $table->increments('id', true)->comment('アクティビティID');
+            $table->unsignedInteger('message_id')->comment('メッセージID');
             $table->boolean('read_flag')->comment('既読フラグ');
             $table->datetime('created_at')->nullable()->comment('作成日時');
             $table->datetime('updated_at')->nullable()->comment('更新日時');
@@ -27,6 +27,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('activities', function (Blueprint $table) {
+            $table->dropForeign(['message_id']);
+        });
         Schema::dropIfExists('activities');
     }
 };

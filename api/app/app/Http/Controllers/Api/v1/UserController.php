@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
+use App\Service\UserService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -14,10 +16,10 @@ class UserController extends Controller
     /**
      * @return void
      */
-    public function __construct(User $userService)
+    public function __construct(UserService $userService)
     {
         $this->middleware('auth:api', ['except' => ['register']]);
-        $this->user = $userService;
+        $this->userService = $userService;
     }
 
     /**
@@ -28,15 +30,16 @@ class UserController extends Controller
      */
     public function index(): JsonResponse
     {
-        $user = User::find(Auth::id());
-        $userRole = $user->role;
+        $user = User::find(Auth::id())->toArray();
+        $userRole = $user['role'];
         if ($userRole === config('const.common.ROLE.MANAGER')) {
             // 部署に所属する管理者以外全てのユーザー情報を取得
+            $manager = $user;
             $crews = $this->userService->getCrews($user);
-
         } else {
             // 所属する部署の管理者のユーザー情報を取得
             $manager = $this->userService->getManager($user);
+            $crews = $user;
         }
         return response()->json([
             'user' => $user,

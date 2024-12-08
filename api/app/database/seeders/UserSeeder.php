@@ -46,5 +46,6 @@ class UserSeeder extends Seeder
                 'role' => 2,
                 'department' => 6400,
         ]);
+        User::factory(10)->create();
     }
 }

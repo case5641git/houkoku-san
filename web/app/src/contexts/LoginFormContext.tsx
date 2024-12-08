@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import { ROLE_LIST } from "../constants/role";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 
 /**
@@ -10,6 +10,13 @@ type FormState = {
   email: string;
   password: string;
   department: string;
+};
+
+// APIレスポンスの型定義
+type APIResponse = {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
 };
 
 /**
@@ -50,6 +57,7 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [cookies, setCookie] = useCookies(["app_access_token"]);
   const navigate = useNavigate();
   const url = "http://localhost:8000/api/v1/auth/login";
 
@@ -63,8 +71,10 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
+    const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
+      [name]: value,
     }));
   };
 
@@ -78,12 +88,17 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
     setIsLoaded(true);
     setError(null);
     try {
-      await axios.post(url, {
-        email: formState.email,
-        password: formState.password,
-        department: formState.department,
-      });
-      navigate("/");
+      await axios
+        .post<APIResponse>(url, {
+          email: formState.email,
+          password: formState.password,
+          department: formState.department,
+        })
+        .then((res) => {
+          const response = res.data;
+          setCookie("app_access_token", response.access_token);
+          navigate("/");
+        });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setError(error.response?.data.message || "ログインに失敗しました。");

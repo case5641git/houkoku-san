@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id()->comment('報告書ID');
+            $table->increments('id')->comment('報告書ID');
             $table->uuid('user_id')->comment('報告者ID');
-            $table->unsignedBigInteger('manager_id')->comment('報告先ID');
+            $table->uuid('manager_id')->comment('報告先ID');
             $table->unsignedBigInteger('reserver_num')->comment('予約者数');
             $table->unsignedBigInteger('visitor_num')->comment('飛込来店数');
             $table->bigInteger('sales')->comment('売上');
@@ -23,6 +23,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('cascade'); 
         });
     }
 
@@ -31,6 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('reports', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
         Schema::dropIfExists('reports');
     }
 };

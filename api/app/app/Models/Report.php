@@ -3,24 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
 class Report extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
-    protected $keyType = 'string';
-    public $incrementing = false;
+    protected $keyType = 'int';
+    public $incrementing = true;
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('Y/m/d H:i');
+    }
 
     protected $casts = [
-        'user_id' => 'integer',
-        'manager_id' => 'integer',
+        'user_id' => 'string',
+        'manager_id' => 'string',
         'reserver_num' => 'integer',
         'visitor_num' => 'integer',
         'sales' => 'integer',
         'customer_feedback' => 'string',
         'crew_feedback' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     protected $fillable = [
