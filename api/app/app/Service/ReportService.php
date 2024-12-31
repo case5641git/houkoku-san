@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Models\Report;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 
 class ReportService
@@ -50,5 +51,52 @@ class ReportService
     return $query->orderBy('created_at', 'desc')
                 ->with(['user'])
                 ->paginate(10);
+  }
+
+  /**
+   * 報告書の作成
+   * @param array $data
+   * @return void
+   */
+  public function createReport(array $data): void
+  {
+    $report = new Report();
+    $report->create([
+        'user_id' => Auth::id(),
+        'manager_id' => Auth::user()->manager_id,
+        'reserver_num' => $data["reserver_num"],
+        'visitor_num' => $data["visitor_num"],
+        'sales' => $data["sales"],
+        'customer_feedback' => $data["customer_feedback"],
+        'crew_feedback' => $data["crew_feedback"],
+    ]);
+  }
+
+  /**
+   * 報告書の詳細を取得
+   * @param int $id
+   * @return array
+   */
+  public function findById(int $id): array
+  {
+    return Report::find($id)->toArray();
+  }
+
+  /**
+   * 報告書の編集
+   * @param array $data
+   * @param int $id
+   * @return void
+   */
+  public function editReport(array $data, int $id):void
+  {
+    $report = Report::find($id);
+    $report->fill([
+      'reserver_num' => $data["reserver_num"],
+      'visitor_num' => $data["visitor_num"],
+      'sales' => $data["sales"],
+      'customer_feedback' => $data["customer_feedback"],
+      'crew_feedback' => $data["crew_feedback"],
+    ]);
   }
 }

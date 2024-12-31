@@ -4,6 +4,8 @@ import { DEPARTMENT_LIST } from "../../../constants/department";
 import styles from "./styles.module.css";
 import { Input } from "../../atoms/Input/Input";
 import { Button } from "../../atoms/Button/Button";
+import { useComponentSwitch } from "../../../contexts/ComponentSwitchContext";
+import { COMPONENT_LIST } from "../../../constants/component";
 
 type Report = {
   id: string;
@@ -20,9 +22,10 @@ export const ReportTable: React.FC = () => {
     useReportContext();
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
+  const { switchComponent } = useComponentSwitch();
 
   return (
-    <div>
+    <div className={styles.reportTableWrapper}>
       <div className={styles.dateSearch}>
         <div className={styles.dateSearchLavel}>日付検索</div>
         <div className={styles.inputDateSearch}>
@@ -68,9 +71,7 @@ export const ReportTable: React.FC = () => {
                   <td>
                     <button
                       key={report.id}
-                      onClick={() => {
-                        console.log(report.id);
-                      }}
+                      onClick={() => switchComponent(COMPONENT_LIST.DETAIL)}
                     >
                       詳細
                     </button>

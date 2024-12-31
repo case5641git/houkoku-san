@@ -1,0 +1,105 @@
+.chatArea {
+  height: 100%;
+}
+
+.chatAreaInner {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  max-width: 500px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.messageArea {
+  width: 100%;
+  flex-grow: 1;
+  margin-top: 50px;
+}
+
+.senderName > p {
+  color: #636363;
+  font-size: 18px;
+}
+
+.senderOptions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.senderOptions span {
+  display: block;
+  color: #636363;
+  font-size: 18px;
+}
+
+.ownMessageArea,
+.otherMessageArea {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 20px 0;
+}
+
+.ownMessageArea {
+  justify-content: flex-end;
+}
+
+.otherMessageArea {
+  justify-content: flex-start;
+}
+
+.ownMessage,
+.otherMessage {
+  border-radius: 15px;
+  padding: 5px 15px;
+}
+
+.ownMessage {
+  background-color: #18d737;
+}
+
+.otherMessage {
+  background-color: #fff;
+}
+
+.ownMessage > p,
+.otherMessage > p {
+  color: #636363;
+  font-size: 25px;
+}
+
+.inputField {
+  width: 100%;
+  margin: 0 0 20px 0;
+}
+
+.inputBox {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 10px 15px;
+}
+
+.inputBox > input {
+  flex-grow: 1;
+  border: none;
+  border-radius: 20px;
+  padding: 0x;
+  font-size: 20px;
+}
+
+.inputBox > input:focus {
+  outline: none;
+}
+
+.inputBox > button {
+  font-size: 20px;
+  border: none;
+  background-color: #18d737;
+  border-radius: 25px;
+  color: #fff;
+  padding: 5px 15px;
+}

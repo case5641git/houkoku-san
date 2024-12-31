@@ -2,8 +2,6 @@
   width: calc(100% - 300px);
 }
 
-.mainInner {
-  width: 80%;
-  max-width: 800px;
-  margin: 60px auto 0;
+.mainContainer > div {
+  height: 100%;
 }

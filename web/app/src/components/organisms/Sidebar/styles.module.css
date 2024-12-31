@@ -94,6 +94,7 @@ p {
 
 .sidebarLink a {
   color: #fff;
+  cursor: pointer;
   font-size: 20px;
   text-decoration: none;
 }
@@ -103,11 +104,13 @@ p {
   flex-grow: 1;
   text-align: center;
   vertical-align: middle;
+  margin: 50px 0 50px 0;
 }
 
 .toReportForm button {
   width: 80%;
   color: #fff;
+  cursor: pointer;
   font-size: 20px;
   padding: 10px;
   margin: 0 0 20px 0;

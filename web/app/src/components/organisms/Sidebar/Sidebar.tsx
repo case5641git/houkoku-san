@@ -5,6 +5,9 @@ import { DEPARTMENT_LIST } from "../../../constants/department";
 import styles from "./styles.module.css";
 import { Button } from "../../atoms/Button/Button";
 import { ROLE_LIST } from "../../../constants/role";
+import { useNavigate, Link } from "react-router-dom";
+import { useComponentSwitch } from "../../../contexts/ComponentSwitchContext";
+import { COMPONENT_LIST } from "../../../constants/component";
 
 type Crew = {
   id: string;
@@ -14,8 +17,10 @@ type Crew = {
 export const Sidebar: React.FC = () => {
   const { users } = useUserContext();
   const { currentPage, fetchReports } = useReportContext();
+  const { switchComponent } = useComponentSwitch();
   const [startDate] = useState<string>("");
   const [endDate] = useState<string>("");
+  const navigate = useNavigate();
 
   console.log(users);
 
@@ -59,10 +64,20 @@ export const Sidebar: React.FC = () => {
               </ul>
             </div>
           )}
+          {users.user.role === ROLE_LIST.CREW && (
+            <div className={styles.sidebarLink}>
+              <a onClick={() => switchComponent(COMPONENT_LIST.INDEX)}>
+                報告書一覧
+              </a>
+            </div>
+          )}
 
           {users.user.role === ROLE_LIST.CREW && (
             <div className={styles.toReportForm}>
-              <button type="button" onClick={() => console.log("業務報告")}>
+              <button
+                type="button"
+                onClick={() => switchComponent(COMPONENT_LIST.REGIST)}
+              >
                 業務報告
               </button>
             </div>
@@ -70,7 +85,9 @@ export const Sidebar: React.FC = () => {
 
           <div className={styles.sidebarLinks}>
             <div className={styles.sidebarLink}>
-              <a>プロフィール</a>
+              <a onClick={() => switchComponent(COMPONENT_LIST.PROFILE)}>
+                プロフィール
+              </a>
             </div>
             <div className={styles.sidebarLink}>
               <a href="/login">ログアウト</a>
