@@ -1,0 +1,128 @@
+.reportViewWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.viewArea {
+  color: #000;
+  width: 50%;
+  max-width: 550px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.viewAreaInner {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.viewAreaInner h3 {
+  font-size: 35px;
+  margin: 15px 0;
+}
+
+.viewAreaInner label {
+  font-size: 25px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.viewAreaInner span {
+  font-size: 25px;
+}
+
+.inputContainer {
+  margin: 0 0 20px 0;
+}
+
+.customerNums {
+  display: flex;
+  flex-direction: row;
+}
+
+.customerNums > div {
+  width: 50%;
+  margin: 0 0 0 15px;
+}
+
+.customerNums > div > span {
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
+.customerNums > div > p {
+  display: inline-block;
+  width: 80px;
+  font-size: 25px;
+  text-align: center;
+}
+
+.salesInputBox {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 20px 15px;
+  align-items: center;
+}
+
+.salesInputBox > p {
+  width: 150px;
+  margin: 0 10px 0 0;
+  font-size: 25px;
+}
+
+.feedbackInputBox {
+  width: 90%;
+  margin: 0 15px;
+}
+
+.feedbackInputBox > p {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #a1a1a1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 18px;
+  padding: 5px 10px;
+  overflow: scroll;
+}
+
+.buttonBox {
+  flex-grow: 1;
+  vertical-align: middle;
+}
+
+.buttonBoxInner {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+button {
+  font-size: 25px;
+  border-radius: 8px;
+  border: 1px solid #ef5c2e;
+  background-color: #ef5c2e;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+.registButton {
+  border: 1px solid #ef5c2e;
+  background-color: #ef5c2e;
+}
+
+.backButton {
+  border: 1px solid #b0b0b0;
+  background-color: #b0b0b0;
+}
+
+.chatArea {
+  width: 50%;
+  flex-grow: 1;
+}

@@ -1,3 +1,9 @@
+.reportTableWrapper {
+  width: 80%;
+  max-width: 800px;
+  margin: 60px auto 0;
+}
+
 .dateSearchLavel {
   color: #000;
   font-size: 20px;

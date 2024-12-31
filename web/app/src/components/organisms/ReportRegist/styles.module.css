@@ -1,0 +1,129 @@
+.reportRegistWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.editArea {
+  color: #000;
+  width: 50%;
+  max-width: 550px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.editAreaInner {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.editArea h3 {
+  font-size: 35px;
+  margin: 15px 0;
+}
+
+.editArea label {
+  font-size: 25px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.editArea span {
+  font-size: 25px;
+}
+
+.editArea input {
+  border: 1px solid #a1a1a1;
+  border-radius: 8px;
+  font-size: 25px;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.inputContainer {
+  margin: 0 0 20px 0;
+}
+
+.customerNums {
+  display: flex;
+  flex-direction: row;
+}
+
+.customerNums > div {
+  width: 50%;
+  margin: 0 0 0 15px;
+}
+
+.customerNums > div > span {
+  margin: 0 10px 0 0;
+}
+
+.customerNums > div > input {
+  width: 80px;
+}
+
+.salesInputBox {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 20px 15px;
+}
+
+.salesInputBox > input {
+  width: 300px;
+  margin: 0 10px 0 0;
+}
+
+.feedbackInputBox {
+  width: 90%;
+  margin: 0 15px;
+}
+
+.feedbackInputBox > textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #a1a1a1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 20px;
+  padding: 5px 10px;
+}
+
+.buttonBox {
+  flex-grow: 1;
+  vertical-align: middle;
+}
+
+.buttonBoxInner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  font-size: 25px;
+  border-radius: 8px;
+  border: 1px solid #ef5c2e;
+  background-color: #ef5c2e;
+  color: #fff;
+  padding: 5px 10px;
+}
+
+.registButton {
+  border: 1px solid #ef5c2e;
+  background-color: #ef5c2e;
+}
+
+.backButton {
+  border: 1px solid #b0b0b0;
+  background-color: #b0b0b0;
+}
+
+.chatArea {
+  width: 50%;
+  flex-grow: 1;
+}

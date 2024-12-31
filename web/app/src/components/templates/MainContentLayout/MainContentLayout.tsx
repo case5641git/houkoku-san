@@ -8,9 +8,5 @@ type MainContentLayoutProps = {
 export const MainContentLayout: React.FC<MainContentLayoutProps> = ({
   children,
 }) => {
-  return (
-    <div className={styles.mainContainer}>
-      <div className={styles.mainInner}>{children}</div>
-    </div>
-  );
+  return <div className={styles.mainContainer}>{children}</div>;
 };
