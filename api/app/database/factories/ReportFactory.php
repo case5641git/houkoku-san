@@ -23,6 +23,8 @@ class ReportFactory extends Factory
             'manager_id' => User::inRandomOrder()->first()->id,
             'reserver_num' => fake()->numberBetween(1, 100),
             'visitor_num' => fake()->numberBetween(1, 100),
+            'reserver_contractor_num' => fake()->numberBetween(1, 100),
+            'visitor_contractor_num' => fake()->numberBetween(1, 100),
             'sales' => fake()->numberBetween(1, 1000000),
             'customer_feedback' => fake()->realText(100),
             'crew_feedback' => fake()->realText(100),

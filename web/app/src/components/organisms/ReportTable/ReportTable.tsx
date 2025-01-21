@@ -8,7 +8,7 @@ import { useComponentSwitch } from "../../../contexts/ComponentSwitchContext";
 import { COMPONENT_LIST } from "../../../constants/component";
 
 type Report = {
-  id: string;
+  id: number;
   created_at: string;
   user: {
     id: string;
@@ -18,8 +18,14 @@ type Report = {
 };
 
 export const ReportTable: React.FC = () => {
-  const { reports, currentPage, lastPage, fetchReports, setCurrentPage } =
-    useReportContext();
+  const {
+    reports,
+    currentPage,
+    lastPage,
+    fetchReports,
+    fetchReportByReportId,
+    setCurrentPage,
+  } = useReportContext();
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
   const { switchComponent } = useComponentSwitch();
@@ -71,7 +77,7 @@ export const ReportTable: React.FC = () => {
                   <td>
                     <button
                       key={report.id}
-                      onClick={() => switchComponent(COMPONENT_LIST.DETAIL)}
+                      onClick={() => fetchReportByReportId(report.id)}
                     >
                       詳細
                     </button>

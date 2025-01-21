@@ -3,17 +3,14 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Report;
 use App\Models\User;
 use App\Service\ReportService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Illuminate\Support\Js;
 
 class ReportController extends Controller
 {
@@ -49,8 +46,8 @@ class ReportController extends Controller
     public function add(Request $request): JsonResponse
     {
         try {
-            $this->reportService->createReport($request->all());
-            return response()->json(['message' => '報告書を作成しました。'], Response::HTTP_CREATED);
+            $reportId = $this->reportService->createReport($request->all());
+            return response()->json(['message' => '報告書を作成しました。', 'reportId' => $reportId], Response::HTTP_CREATED);
         } catch (Exception $e) {
             return response()->json(['message' => '報告書の作成に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

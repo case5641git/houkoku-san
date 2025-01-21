@@ -37,7 +37,8 @@ export const Profile: React.FC = () => {
             退会
           </button>
         </div>
-        <div className={styles.modalWrapper}>
+        {/* TODO 退会確認機能実装 */}
+        {/* <div className={styles.modalWrapper}>
           <div className={styles.modalInner}>
             <p>本当に退会しますか？</p>
             <div className={styles.buttonContainer}>
@@ -45,7 +46,7 @@ export const Profile: React.FC = () => {
               <button className={styles.leaveButton}>退会</button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </form>
   );

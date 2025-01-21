@@ -3,9 +3,10 @@
 namespace App\Service;
 
 use App\Models\Report;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 
 class ReportService
 {
@@ -56,20 +57,28 @@ class ReportService
   /**
    * 報告書の作成
    * @param array $data
-   * @return void
+   * @return interger
    */
-  public function createReport(array $data): void
+  public function createReport(array $data): int
   {
     $report = new Report();
-    $report->create([
-        'user_id' => Auth::id(),
-        'manager_id' => Auth::user()->manager_id,
+    $userId = Auth::id();
+    $managerId = User::where('role', config('const.common.ROLE.MANAGER'))
+                      ->where('department', Auth::user()->department)
+                      ->first()->id;
+    $report->fill([
+        'user_id' => $userId,
+        'manager_id' => $managerId,
         'reserver_num' => $data["reserver_num"],
         'visitor_num' => $data["visitor_num"],
+        'reserver_contractor_num' => $data["reserver_contractor_num"],
+        'visitor_contractor_num' => $data["visitor_contractor_num"],
         'sales' => $data["sales"],
         'customer_feedback' => $data["customer_feedback"],
         'crew_feedback' => $data["crew_feedback"],
     ]);
+    $report->save();
+    return $report->id;
   }
 
   /**
@@ -88,15 +97,16 @@ class ReportService
    * @param int $id
    * @return void
    */
-  public function editReport(array $data, int $id):void
-  {
-    $report = Report::find($id);
-    $report->fill([
-      'reserver_num' => $data["reserver_num"],
-      'visitor_num' => $data["visitor_num"],
-      'sales' => $data["sales"],
-      'customer_feedback' => $data["customer_feedback"],
-      'crew_feedback' => $data["crew_feedback"],
-    ]);
-  }
+  // public function editReport(array $data, int $id):void
+  // {
+  //   $report = Report::find($id);
+  //   $report->fill([
+  //     'reserver_num' => $data["reserver_num"],
+  //     'visitor_num' => $data["visitor_num"],
+  //     'sales' => $data["sales"],
+  //     'customer_feedback' => $data["customer_feedback"],
+  //     'crew_feedback' => $data["crew_feedback"],
+  //   ]);
+  //   $report->save();
+  // }
 }
