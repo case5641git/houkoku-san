@@ -63,8 +63,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
           },
         }
       );
-      console.log("data:");
-      console.log(data);
       setUsers(data);
     } catch {
       setError("ユーザーデータの取得に失敗しました");

@@ -22,8 +22,6 @@ export const Sidebar: React.FC = () => {
   const [endDate] = useState<string>("");
   const navigate = useNavigate();
 
-  console.log(users);
-
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebarInner}>
@@ -49,7 +47,6 @@ export const Sidebar: React.FC = () => {
               <div>メンバー</div>
               <ul>
                 {users.crews.map((crew: Crew) => {
-                  console.log(typeof crew.id);
                   return (
                     <li
                       key={crew.id}

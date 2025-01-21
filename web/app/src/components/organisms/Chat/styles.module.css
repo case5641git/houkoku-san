@@ -15,6 +15,7 @@
   width: 100%;
   flex-grow: 1;
   margin-top: 50px;
+  overflow-y: scroll;
 }
 
 .senderName > p {
@@ -42,7 +43,7 @@
 }
 
 .ownMessageArea {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .otherMessageArea {

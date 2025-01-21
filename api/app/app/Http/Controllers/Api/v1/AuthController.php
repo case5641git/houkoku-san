@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -58,6 +59,33 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
         return $this->respondWithToken($token);
+    }
+
+    /**
+     * ログインユーザー情報の更新
+     * @param Request $request
+     * @return void
+     */
+    public function update(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            $user = auth()->user();
+            $requestqAll = $request->all();
+            $user->fill($requestqAll)->save();
+        });
+    }
+
+    /**
+     * ユーザー情報の削除 (退会処理)
+     * @integer $userId
+     */
+    public function unsubscribe(int $userId)
+    {
+        DB::transaction(function () use ($userId) {
+            $user = User::find($userId);
+            $user->delete();
+            // TODO 退会するときに関連する情報も削除する
+        });
     }
 
     /**

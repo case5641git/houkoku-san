@@ -11,8 +11,6 @@ import { COMPONENT_LIST } from "../../../constants/component";
 
 export const HomeTemplate: React.FC = () => {
   const { currentContent } = useComponentSwitch();
-  console.log(typeof currentContent);
-  console.log(typeof COMPONENT_LIST.INDEX);
 
   return (
     <BaseLayout>

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->increments('id')->comment('報告書ID');
             $table->uuid('user_id')->comment('報告者ID');
             $table->uuid('manager_id')->comment('報告先ID');
-            $table->unsignedBigInteger('reserver_num')->comment('予約者数');
-            $table->unsignedBigInteger('visitor_num')->comment('飛込来店数');
+            $table->unsignedBigInteger('reserver_num')->comment('予約来店者数');
+            $table->unsignedBigInteger('visitor_num')->comment('飛込来店者数');
+            $table->unsignedBigInteger('reserver_contractor_num')->comment('予約成約者数');
+            $table->unsignedBigInteger('visitor_contractor_num')->comment('飛込成約者数');
             $table->bigInteger('sales')->comment('売上');
             $table->text('customer_feedback')->comment('お客様ご意見');
             $table->text('crew_feedback')->comment('店長フィードバック');

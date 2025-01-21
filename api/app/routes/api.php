@@ -3,9 +3,12 @@
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\ReportController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Events\MessageCreated;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +37,14 @@ Route::group([
 ], function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/profile/edit', [AuthController::class, 'update'])->name('profile.edit');
+    Route::post('unsubscribe', [AuthController::class, 'unsubscribe'])->name('unsubscribe');
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('me', [AuthController::class, "me"])->name('me');
     Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('reports', [ReportController::class, 'add'])->name('reports.add');
+    Route::get('reports/{report_id}', [ReportController::class, 'showDetail'])->name('reports.show_detail');
+    Route::get('messages/{report_id}', [MessageController::class, 'showMessages'])->name('show_messages');
+    Route::post('send-message', [MessageController::class, 'sendMessage'])->name('send_message');
 });

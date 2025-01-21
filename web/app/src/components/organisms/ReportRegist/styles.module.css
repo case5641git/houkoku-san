@@ -95,13 +95,6 @@
 
 .buttonBox {
   flex-grow: 1;
-  vertical-align: middle;
-}
-
-.buttonBoxInner {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 button {
@@ -118,12 +111,21 @@ button {
   background-color: #ef5c2e;
 }
 
-.backButton {
-  border: 1px solid #b0b0b0;
-  background-color: #b0b0b0;
-}
-
 .chatArea {
   width: 50%;
   flex-grow: 1;
+}
+
+.chatAreaInner {
+  display: table;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.chatNotice {
+  color: #000;
+  font-size: 20px;
+  display: table-cell;
+  vertical-align: middle;
 }
