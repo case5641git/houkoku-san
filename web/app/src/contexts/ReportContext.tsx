@@ -50,7 +50,7 @@ type ReportContextProps = {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
-  createReport: (e: React.FormEvent) => void;
+  createReport: (userId: string, managerId: string) => void;
   fetchReports: (
     page: number,
     startDate?: string,
@@ -162,33 +162,37 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
     [token]
   );
 
-  const createReport = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const newReport = await axios.post(
-        `http://localhost:8000/api/v1/auth/reports`,
-        {
-          user_id: "",
-          manager_id: "",
-          reserver_num: formState.reserver_num,
-          visitor_num: formState.visitor_num,
-          reserver_contractor_num: formState.reserver_contractor_num,
-          visitor_contractor_num: formState.visitor_contractor_num,
-          sales: formState.sales,
-          customer_feedback: formState.customer_feedback,
-          crew_feedback: formState.crew_feedback,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+  const createReport = useCallback(
+    async (userId: string, managerId: string) => {
+      console.log(userId, managerId);
+      try {
+        const newReport = await axios.post(
+          `http://localhost:8000/api/v1/auth/reports`,
+          {
+            user_id: userId,
+            manager_id: managerId,
+            reserver_num: formState.reserver_num,
+            visitor_num: formState.visitor_num,
+            reserver_contractor_num: formState.reserver_contractor_num,
+            visitor_contractor_num: formState.visitor_contractor_num,
+            sales: formState.sales,
+            customer_feedback: formState.customer_feedback,
+            crew_feedback: formState.crew_feedback,
           },
-        }
-      );
-      fetchReportByReportId(newReport.data.reportId);
-    } catch {
-      handleError("レポートの作成に失敗しました。");
-    }
-  }, []);
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        fetchReportByReportId(newReport.data.reportId);
+      } catch {
+        handleError("レポートの作成に失敗しました。");
+      }
+    },
+    []
+  );
 
   useEffect(() => {
     fetchReports(currentPage);

@@ -2,11 +2,21 @@ import React from "react";
 import styles from "./styles.module.css";
 import { Chat } from "../../organisms/Chat/Chat";
 import { useReportContext } from "../../../contexts/ReportContext";
+import { useUserContext } from "../../../contexts/UserContext";
 
 export const ReportRegist: React.FC = () => {
   const { formState, createReport, handleChange } = useReportContext();
+  const { users } = useUserContext();
+
+  console.log(users);
+  const userId = users.user.id;
+  const managerId = users.manager.id;
   return (
-    <form className={styles.reportRegistWrapper} onSubmit={createReport}>
+    // <form
+    //   className={styles.reportRegistWrapper}
+    //   onSubmit={() => createReport(userId, managerId)}
+    // >
+    <div className={styles.reportRegistWrapper}>
       <div className={styles.editArea}>
         <div className={styles.editAreaInner}>
           <h3>業務報告詳細</h3>
@@ -97,7 +107,12 @@ export const ReportRegist: React.FC = () => {
           </div>
 
           <div className={styles.buttonBox}>
-            <button className={styles.registButton}>登録</button>
+            <button
+              className={styles.registButton}
+              onClick={() => createReport(userId, managerId)}
+            >
+              登録
+            </button>
           </div>
         </div>
       </div>
@@ -108,6 +123,7 @@ export const ReportRegist: React.FC = () => {
           </p>
         </div>
       </div>
-    </form>
+    </div>
+    // </form>
   );
 };
