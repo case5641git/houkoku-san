@@ -69,6 +69,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, [token]);
 
+  // const updateUser = useCallback(async () => {
+  //   try {
+  //     const;
+  //   } catch {}
+  // });
+
   useEffect(() => {
     fetchUsers();
   }, [token]);

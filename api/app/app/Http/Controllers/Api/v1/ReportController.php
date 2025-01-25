@@ -45,6 +45,7 @@ class ReportController extends Controller
      */
     public function add(Request $request): JsonResponse
     {
+        Log::info($request->all());
         try {
             $reportId = $this->reportService->createReport($request->all());
             return response()->json(['message' => '報告書を作成しました。', 'reportId' => $reportId], Response::HTTP_CREATED);

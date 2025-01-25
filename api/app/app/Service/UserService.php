@@ -10,13 +10,13 @@ class UserService
   /**
    * 所属する部署の管理者情報を取得する
    * @param array $user
-   * @return Collection
+   * @return User
    */
-  public function getManager(array $user): Collection
+  public function getManager(array $user): User
   {
     return User::where('role', config('const.common.ROLE.MANAGER'))
                 ->where('department', $user['department'])
-                ->get();
+                ->first();
   }
 
   /**

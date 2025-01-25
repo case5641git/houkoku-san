@@ -61,13 +61,11 @@ export const Sidebar: React.FC = () => {
               </ul>
             </div>
           )}
-          {users.user.role === ROLE_LIST.CREW && (
-            <div className={styles.sidebarLink}>
-              <a onClick={() => switchComponent(COMPONENT_LIST.INDEX)}>
-                報告書一覧
-              </a>
-            </div>
-          )}
+          <div className={styles.sidebarLink}>
+            <a onClick={() => switchComponent(COMPONENT_LIST.INDEX)}>
+              報告書一覧
+            </a>
+          </div>
 
           {users.user.role === ROLE_LIST.CREW && (
             <div className={styles.toReportForm}>
