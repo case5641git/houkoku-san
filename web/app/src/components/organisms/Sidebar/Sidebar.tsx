@@ -79,11 +79,11 @@ export const Sidebar: React.FC = () => {
           )}
 
           <div className={styles.sidebarLinks}>
-            <div className={styles.sidebarLink}>
+            {/* <div className={styles.sidebarLink}>
               <a onClick={() => switchComponent(COMPONENT_LIST.PROFILE)}>
                 プロフィール
               </a>
-            </div>
+            </div> */}
             <div className={styles.sidebarLink}>
               <a href="/login">ログアウト</a>
             </div>

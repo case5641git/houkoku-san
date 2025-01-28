@@ -50,8 +50,15 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     manager: { id: "", name: "" },
     crews: [],
   });
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    department: 0,
+  });
   const [error, setError] = useState<string | null>(null);
   const token = cookies.app_access_token;
+
+  console.log(users);
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -68,12 +75,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setError("ユーザーデータの取得に失敗しました");
     }
   }, [token]);
-
-  // const updateUser = useCallback(async () => {
-  //   try {
-  //     const;
-  //   } catch {}
-  // });
 
   useEffect(() => {
     fetchUsers();
