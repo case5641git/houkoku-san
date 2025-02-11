@@ -116,7 +116,7 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
     async (page: number, startDate = "", endDate = "", userId = "") => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/api/v1/auth/reports?page=${page}`,
+          `http://localhost:8000/api/v1/reports?page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -138,46 +138,44 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
     [token, startDate, endDate]
   );
 
-  const fetchReportByReportId = useCallback(
-    async (reportId: number) => {
-      try {
-        if (reportId === 0) {
-          handleError("レポートを選択してください。");
-          return;
-        }
-        const { data } = await axios.get(
-          `http://localhost:8000/api/v1/auth/reports/${reportId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setReport(data.report);
-        switchComponent(COMPONENT_LIST.DETAIL);
-      } catch {
-        handleError("レポートの詳細が取得できません。");
+  const fetchReportByReportId = useCallback(async (reportId: number) => {
+    try {
+      if (reportId === 0) {
+        handleError("レポートを選択してください。");
+        return;
       }
-    },
-    [token]
-  );
+      const { data } = await axios.get(
+        `http://localhost:8000/api/v1/reports/${reportId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setReport(data.report);
+      switchComponent(COMPONENT_LIST.DETAIL);
+    } catch {
+      handleError("レポートの詳細が取得できません。");
+    }
+  }, []);
 
   const createReport = useCallback(
     async (userId: string, managerId: string) => {
-      console.log(userId, managerId);
+      let reportInfo = formState;
+
       try {
         const newReport = await axios.post(
-          `http://localhost:8000/api/v1/auth/reports`,
+          `http://localhost:8000/api/v1/reports`,
           {
             user_id: userId,
             manager_id: managerId,
-            reserver_num: formState.reserver_num,
-            visitor_num: formState.visitor_num,
-            reserver_contractor_num: formState.reserver_contractor_num,
-            visitor_contractor_num: formState.visitor_contractor_num,
-            sales: formState.sales,
-            customer_feedback: formState.customer_feedback,
-            crew_feedback: formState.crew_feedback,
+            reserver_num: reportInfo.reserver_num,
+            visitor_num: reportInfo.visitor_num,
+            reserver_contractor_num: reportInfo.reserver_contractor_num,
+            visitor_contractor_num: reportInfo.visitor_contractor_num,
+            sales: reportInfo.sales,
+            customer_feedback: reportInfo.customer_feedback,
+            crew_feedback: reportInfo.crew_feedback,
           },
           {
             headers: {

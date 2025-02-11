@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Service\ReportService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -43,14 +42,13 @@ class ReportController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function add(Request $request): JsonResponse
+    public function add(Request $request):  JsonResponse
     {
-        Log::info($request->all());
         try {
             $reportId = $this->reportService->createReport($request->all());
-            return response()->json(['message' => '報告書を作成しました。', 'reportId' => $reportId], Response::HTTP_CREATED);
+            return response()->json(['reportId' => $reportId], Response::HTTP_CREATED);
         } catch (Exception $e) {
-            return response()->json(['message' => '報告書の作成に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -66,7 +64,7 @@ class ReportController extends Controller
             $report = $this->reportService->findById($id);
             return response()->json(['report' => $report], Response::HTTP_OK);
         } catch (Exception $e) {
-            return response()->json(['message' => '報告書の取得に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -81,9 +79,9 @@ class ReportController extends Controller
     {
         try {
             $this->reportService->editReport($request->all(), $id);
-            return response()->json(['message' => '報告書を編集しました。'], Response::HTTP_OK);
+            return response()->json(Response::HTTP_OK);
         } catch (Exception $e) {
-            return response()->json(['message' => '報告書の編集に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }

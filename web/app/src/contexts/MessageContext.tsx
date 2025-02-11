@@ -65,7 +65,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
   const fetchMessages = useCallback(async (reportId: number) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/auth/messages/${reportId}`,
+        `http://localhost:8000/api/v1/messages/${reportId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -83,10 +83,8 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
   };
 
   const sendMessage = async (reportId: number) => {
-    // console.log("Token:", token);
-    // console.log("send message:", report);
     const response = await axios.post(
-      "http://localhost:8000/api/v1/auth/send-message",
+      "http://localhost:8000/api/v1/send-message",
       {
         message: newMessage,
         report_id: report?.id,
@@ -99,7 +97,6 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
         },
       }
     );
-    // console.log("response:", response);
     if (response.status === 200) {
       setNewMessage("");
       fetchMessages(reportId);
@@ -107,7 +104,6 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
   };
 
   useEffect(() => {
-    console.log("useEffect", report);
     if (report) {
       const reportId = report.id;
       fetchMessages(reportId);

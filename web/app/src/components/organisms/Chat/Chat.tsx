@@ -24,6 +24,7 @@ export const Chat: React.FC = () => {
         <div className={styles.messageArea}>
           <div id="messageScroll">
             {Object.entries(messages).map(([key, value], index) => {
+              console.log(value);
               if (value.user_id === userId) {
                 return (
                   <div className={styles.ownMessageArea} key={value.id}>
@@ -42,7 +43,8 @@ export const Chat: React.FC = () => {
                   <div className={styles.otherMessageArea} key={value.id}>
                     <div className={styles.otherMessageAreaInner}>
                       <div className={styles.senderName}>
-                        <p>{value.user.name}</p>
+                        {/* <p>{value.user.name}</p> */}
+                        <p>テスト太郎</p>
                       </div>
                       <div className={styles.otherMessage}>
                         <p>{value.message}</p>

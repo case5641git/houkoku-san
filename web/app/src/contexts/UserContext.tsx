@@ -58,18 +58,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null);
   const token = cookies.app_access_token;
 
-  console.log(users);
-
   const fetchUsers = useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        "http://localhost:8000/api/v1/auth/users",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const { data } = await axios.get("http://localhost:8000/api/v1/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setUsers(data);
     } catch {
       setError("ユーザーデータの取得に失敗しました");
