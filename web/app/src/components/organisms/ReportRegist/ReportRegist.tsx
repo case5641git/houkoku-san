@@ -8,7 +8,6 @@ export const ReportRegist: React.FC = () => {
   const { formState, createReport, handleChange } = useReportContext();
   const { users } = useUserContext();
 
-  console.log(users);
   const userId = users.user.id;
   const managerId = users.manager.id;
   return (

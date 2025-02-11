@@ -8,7 +8,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
@@ -24,9 +23,9 @@ class AuthController extends Controller
     /**
      * 新規登録処理
      * @param Request $request
-     * @return RedirectResponse|JsonResponse
+     * @return JsonResponse
      */
-    public function register(Request $request): RedirectResponse|JsonResponse
+    public function register(Request $request): JsonResponse
     {
         $credentials = $request->validate([
             'name' => 'required',
@@ -39,8 +38,7 @@ class AuthController extends Controller
         try {
             $user = User::create($credentials);
         } catch (\Exception $e) {
-            Log::error($e);
-            return response()->json(['message' => 'ユーザー登録に失敗しました。'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return response()->json(Response::HTTP_INTERNAL_SERVER_ERROR);
         }       
         $token = auth()->login($user);
         return $this->respondWithToken($token);
@@ -48,15 +46,16 @@ class AuthController extends Controller
 
     /**
      * ログイン処理
+     * @return JsonResponse
      */
-    public function login()
+    public function login(): JsonResponse
     {
         $credentials = request()->validate([
             'email' => 'required|email', 
             'password' => 'required'
         ]);
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return response()->json(Response::HTTP_UNAUTHORIZED);
         }
         return $this->respondWithToken($token);
     }
@@ -92,7 +91,7 @@ class AuthController extends Controller
      * 認証しているユーザーの情報を取得
      * @return JsonResponse
      */
-    public function me()
+    public function me(): JsonResponse
     {
         return response()->json(auth()->user());
     }
@@ -101,17 +100,20 @@ class AuthController extends Controller
      * ログアウト処理
      * @return JsonResponse
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
-        auth()->logout();
-        return response()->json(['message' => 'ログアウトしました。']);
+        try {
+            auth()->logout();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'ログアウトに失敗しました。']);
+        }
     }
 
     /**
      * トークンをリフレッシュ
      * @return JsonResponse
      */
-    public function refresh()
+    public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
     }
@@ -120,7 +122,7 @@ class AuthController extends Controller
      * トークンを返却
      * @return JsonResponse
      */
-    public function respondWithToken($token)
+    public function respondWithToken($token): JsonResponse
     {
         return response()->json([
             'access_token' => $token,

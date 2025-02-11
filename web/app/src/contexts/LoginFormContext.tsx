@@ -59,7 +59,7 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [cookies, setCookie] = useCookies(["app_access_token"]);
   const navigate = useNavigate();
-  const url = "http://localhost:8000/api/v1/auth/login";
+  const url = "http://localhost:8000/api/v1/login";
 
   /**
    * フォームの入力値を更新する

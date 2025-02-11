@@ -33,11 +33,11 @@ Route::prefix('v1')->group(function () {
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'v1/auth'
+    'prefix' => 'v1'
 ], function () {
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/profile/edit', [AuthController::class, 'update'])->name('profile.edit');
+    Route::put('/profile', [AuthController::class, 'update'])->name('profile.edit');
     Route::post('unsubscribe', [AuthController::class, 'unsubscribe'])->name('unsubscribe');
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('me', [AuthController::class, "me"])->name('me');
