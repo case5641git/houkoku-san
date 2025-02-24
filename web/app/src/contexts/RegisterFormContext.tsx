@@ -45,6 +45,7 @@ const RegisterFormContext = createContext<RegisterFormContextType | undefined>(
 export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
   const [formState, setFormState] = useState<FormState>({
     name: "",
     email: "",
@@ -55,7 +56,7 @@ export const RegisterFormProvider: React.FC<{ children: React.ReactNode }> = ({
   });
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-  const url = "http://localhost:8000/api/v1/register";
+  const url = `${baseURL}/api/v1/register`;
 
   /**
    * フォームの入力値を更新する

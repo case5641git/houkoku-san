@@ -55,6 +55,7 @@ const MessageContext = createContext<MessageContextProps>({
 export const MessageProvider: React.FC<MessageProviderProps> = ({
   children,
 }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -65,7 +66,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
   const fetchMessages = useCallback(async (reportId: number) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/messages/${reportId}`,
+        `${baseURL}/api/v1/messages/${reportId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,7 +85,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
 
   const sendMessage = async (reportId: number) => {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/send-message",
+      `${baseURL}/api/v1/send-message`,
       {
         message: newMessage,
         report_id: report?.id,
