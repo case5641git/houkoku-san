@@ -65,11 +65,14 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({
 
   const fetchMessages = useCallback(async (reportId: number) => {
     try {
-      const { data } = await axios.get(`/api/v1/messages/${reportId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await axios.get(
+        `${baseURL}/api/v1/messages/${reportId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setMessages(data.messages);
     } catch (error) {
       handleError("メッセージの取得に失敗しました");
