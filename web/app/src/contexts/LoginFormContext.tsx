@@ -50,6 +50,7 @@ const LoginFormContext = createContext<LoginFormContextType | undefined>(
 export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
   const [formState, setFormState] = useState<FormState>({
     email: "",
     password: "",
@@ -59,7 +60,7 @@ export const LoginFormProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [cookies, setCookie] = useCookies(["app_access_token"]);
   const navigate = useNavigate();
-  const url = "http://localhost:8000/api/v1/login";
+  const url = `${baseURL}/api/v1/login`;
 
   /**
    * フォームの入力値を更新する

@@ -44,6 +44,7 @@ type UserProviderProps = {
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["app_access_token"]);
   const [users, setUsers] = useState<Users>({
     user: { id: "", department: 0 },
@@ -60,7 +61,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const fetchUsers = useCallback(async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/v1/users", {
+      const { data } = await axios.get(`${baseURL}/api/v1/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

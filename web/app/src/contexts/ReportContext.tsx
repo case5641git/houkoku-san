@@ -68,6 +68,7 @@ type ReportProviderProps = {
 const ReportContext = createContext<ReportContextProps | undefined>(undefined);
 
 export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
+  const baseURL = process.env.REACT_APP_API_URL;
   const [reports, setReports] = useState<Report[]>([]);
   const [report, setReport] = useState<Report>();
   const [reportId, setReportId] = useState<number>(0);
@@ -116,7 +117,7 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
     async (page: number, startDate = "", endDate = "", userId = "") => {
       try {
         const { data } = await axios.get(
-          `http://localhost:8000/api/v1/reports?page=${page}`,
+          `${baseURL}/api/v1/reports?page=${page}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -145,7 +146,7 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
         return;
       }
       const { data } = await axios.get(
-        `http://localhost:8000/api/v1/reports/${reportId}`,
+        `${baseURL}/api/v1/reports/${reportId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -165,7 +166,7 @@ export const ReportProvider: React.FC<ReportProviderProps> = ({ children }) => {
 
       try {
         const newReport = await axios.post(
-          `http://localhost:8000/api/v1/reports`,
+          `${baseURL}/api/v1/reports`,
           {
             user_id: userId,
             manager_id: managerId,
